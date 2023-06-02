@@ -6,7 +6,11 @@ export default {
 		env: Env,
 		ctx: ExecutionContext
 	): Promise<Response> {
-		const resp = await fetch("https://example.com");
-		return new Response(resp.body, resp);
+		const cache = caches.default
+		let response = await cache.match(request)
+		if (response) return response
+		response = await fetch("https://example.com");
+		ctx.waitUntil(cache.put(request, response.clone()))
+		return new Response(response.body, response);
 	},
 };
