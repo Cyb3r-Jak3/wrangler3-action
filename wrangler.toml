@@ -1,0 +1,3 @@
+name = "wrangler-3-actions"
+main = "src/index.ts"
+compatibility_date = "2023-06-02"
